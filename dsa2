@@ -1,0 +1,1 @@
+Aim - There is an array a, we have to make another array b from the given array a of same size from 1 to n such that b[i]contains the product of elements of a[i] but not the element present that index.
