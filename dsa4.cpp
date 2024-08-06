@@ -10,7 +10,7 @@ int main() {
         count = count + 1;
         vel = vel/2;
     }
-    cout<<"Number of tappe = "<<count;
+    cout<<"Number of bounces = "<<count;
     
     return 0;
 }
