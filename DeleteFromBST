@@ -1,0 +1,99 @@
+#include<iostream>
+using namespace std;
+
+class node {
+    public: 
+    int data;
+    node* left ;
+    node* right ;
+
+    node(int data) {
+        this->data = data;
+        left = right = NULL;
+    }
+};
+
+node* insert(node* root , int data) {
+    if (root == NULL ) {
+        return new node(data);
+    }
+    if (data > root->data) {
+        root->right = insert(root->right , data);
+    }
+    else if (data < root->data) {
+        root->left = insert(root->left , data);
+    }
+    return root ;
+}
+
+node* buildBST(node* root,int data) {
+    return insert(root , data);
+}
+
+void inOrderTraversal(node* root ) {
+    if (root == NULL) {
+        return ;
+    }
+    inOrderTraversal(root->left);
+    cout<<root->data<<" "<<endl;
+    inOrderTraversal(root->right);
+}
+
+node* getInorderSuccessor(node* root) {
+    while (root->left !=NULL) {
+        root = root->left;
+    }
+    return root; 
+}
+
+node* delNode(node* root , int val) {
+    if (root == NULL ) {
+        return NULL;
+    }
+
+    if (val < root->data) {
+        root->left = delNode(root->left , val) ;
+    }
+    else if (val>root->data) {
+        root->right = delNode(root->right , val) ;
+    }
+    else {
+        //o children
+        if(root->left ==NULL && root->right == NULL) {
+            delete root;
+            return NULL;
+        }
+
+        //1 children
+        if (root->left == NULL || root->right == NULL) {
+            return root->left == NULL ? root->right : root->left;
+        }
+        
+        //2 children
+        node* IS = getInorderSuccessor (root->right) ;
+        root->data = IS->data;
+        root->right = delNode(root->right , IS -> data) ;
+        return root;
+        }
+        return root;
+}
+
+int main() {
+    int arr[7] = {6,3,5,7,10,9,1};
+    node* root = NULL;
+
+    for (int i=0 ; i<7 ; i++) {
+    root = buildBST(root , arr[i]); 
+}
+  cout<<"InOrderTraversal :" <<endl;
+inOrderTraversal(root);
+cout<< endl;
+
+delNode(root , 5);
+
+inOrderTraversal(root);
+cout<<endl;
+
+return 0;
+
+}
